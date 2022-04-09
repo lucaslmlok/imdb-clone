@@ -1,33 +1,29 @@
 import { useState } from "react";
 import axios from "axios";
-import Header from "./components/Header";
-import ListItem from "./components/ListItem";
+import { Movie } from "./react-app-env";
 import { API_PATH } from "./utils/config";
-import Loader from "./components/Loader";
-
-export interface Movie {
-    id: string;
-    title: string;
-    image: string;
-    genreList: { key: string; value: string }[];
-    imDbRating: string;
-}
+import Header from "./components/Header";
+import ResultArea from "./components/ResultArea";
 
 function App() {
     const [keyword, setKeyword] = useState("");
+    const [searchedKeyword, setSearchedKeyword] = useState("");
     const [movies, setMovies] = useState<Movie[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const search = async () => {
+        if (!keyword || keyword === searchedKeyword) return;
         setIsLoading(true);
         const url = `${API_PATH}AdvancedSearch/${process.env.REACT_APP_API_KEY}/`;
-        const config = {
-            params: {
-                title: keyword,
-            },
-        };
-        const res = await axios.get(url, config);
-        setMovies(res.data.results);
+        const params = { title: keyword };
+        const { data } = await axios.get(url, { params });
+        if (data.results) {
+            setMovies(data.results);
+        } else {
+            setErrorMessage(data.errorMessage);
+        }
+        setSearchedKeyword(keyword);
         setIsLoading(false);
     };
 
@@ -40,25 +36,16 @@ function App() {
             />
             <main>
                 <div className="container">
-                    {isLoading ? <Loader /> : <List movies={movies} />}
+                    <ResultArea
+                        isLoading={isLoading}
+                        searchedKeyword={searchedKeyword}
+                        movies={movies}
+                        errorMessage={errorMessage}
+                    />
                 </div>
             </main>
         </>
     );
 }
-
-const List = ({ movies }: { movies: Movie[] }) => {
-    if (movies.length === 0) {
-        return <div>No Result</div>;
-    }
-
-    return (
-        <ul className="list">
-            {movies.map((movie) => (
-                <ListItem key={movie.id} movie={movie} />
-            ))}
-        </ul>
-    );
-};
 
 export default App;

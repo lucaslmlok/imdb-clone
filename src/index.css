@@ -89,7 +89,7 @@ a:hover {
     cursor: pointer;
 }
 
-.list__loading {
+.placeholder {
     height: 100px;
     display: grid;
     place-items: center;

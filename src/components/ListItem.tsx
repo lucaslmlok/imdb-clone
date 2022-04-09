@@ -1,5 +1,5 @@
 import { MdStar } from "react-icons/md";
-import { Movie } from "../App";
+import { Movie } from "../react-app-env";
 
 interface Props {
     movie: Movie;

@@ -12,7 +12,7 @@ const Header = ({ keyword, onChange, onSearch }: Props) => {
         <header className="header">
             <div className="container">
                 <div className="header__wrapper">
-                    <a className="header__logo" href="#">
+                    <a className="header__logo" href=".">
                         <img src={logo} alt="MYDb Logo" />
                     </a>
                     <div className="header__search-bar">
