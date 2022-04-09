@@ -2,7 +2,7 @@
 
 ## Link
 
-[https://lucaslmlok.github.io/simple-react-expense-tracker/](https://lucaslmlok.github.io/simple-react-expense-tracker/)
+[https://lucaslmlok.github.io/imdb-clone/](https://lucaslmlok.github.io/imdb-clone/)
 
 ## Tech Used
 
